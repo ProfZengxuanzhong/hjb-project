@@ -1,0 +1,23 @@
+name: 上传覆盖率给Codecov
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: 安装依赖
+        run: npm install
+        
+      - name: 运行测试并生成覆盖率
+        run: npm test -- --coverage
+        
+      - name: 上传报告到 Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
